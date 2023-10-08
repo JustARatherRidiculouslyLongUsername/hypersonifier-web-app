@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar selectedImage={selectedImage} />
       <main className="flex min-h-screen flex-col px-24 pb-3 pt-24 justify-center bg-gray-950">
         <audio
           src={`assets/${selectedImage}/audio/final_sound.mp3`}

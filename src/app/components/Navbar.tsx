@@ -5,8 +5,28 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import Image from "next/image";
 
-export default function Navbar() {
+const titles = [
+  null,
+  "Object: Andromeda",
+  "ngc 13",
+  "Coords: 19h17m32s 11d58m02s",
+  "Coords: 19h17m32s 11d58m02s",
+  "Coords: 0h55m14.98s 24d33m54.7s",
+  " CT-Scan Results",
+];
+
+const subtitles = [
+  null,
+  "5000 arcseconds",
+  "500 arcseconds",
+  "500 arcseconds",
+  "2000 arcseconds",
+  "",
+];
+
+export default function Navbar({ selectedImage }: { selectedImage?: number }) {
   return (
     <Box sx={{ flexGrow: 1, position: "sticky" }}>
       <AppBar
@@ -14,13 +34,23 @@ export default function Navbar() {
         className="border-b border-gray-900"
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, textAlign: "center" }}
-          >
-            Hyper⚡onify
-          </Typography>
+          <div className="absolute w-28 h-10 border"></div>
+
+          <div className="grow">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, textAlign: "center" }}
+            >
+              {selectedImage ? titles[selectedImage] : null}
+            </Typography>
+            {selectedImage && subtitles[selectedImage] && (
+              <p className="text-center text-sm text-gray-500">
+                Image Size: {subtitles[selectedImage]}
+              </p>
+            )}
+          </div>
+
           {/* <IconButton
             sx={{
               ":hover": {
