@@ -28,12 +28,12 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col px-24 pb-8 pt-24 justify-center">
+      <main className="flex min-h-screen flex-col px-24 pb-3 pt-24 justify-center">
         <audio
           src={`assets/${selectedImage}/audio/final_sound.mp3`}
           ref={audioRef}
         ></audio>
-        <div className="grow  my-4 overflow-hidden flex flex-wrap rounded-xl justify-center">
+        <div className="my-4 overflow-hidden flex flex-wrap rounded-xl justify-center">
           <div className="h-100 w-100 border border-gray-700">
             <NextReactP5Wrapper
               sketch={compositeSketch}

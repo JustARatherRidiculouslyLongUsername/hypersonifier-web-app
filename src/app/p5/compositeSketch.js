@@ -88,7 +88,7 @@ const compositeSketch = (p5) => {
     p5.curveVertex((progress * WIDTH) / 100, 0);
     p5.curveVertex((progress * WIDTH) / 100, 0);
 
-    const curveHeight = 40;
+    const curveHeight = 50;
     for (let y = 0; y < HEIGHT; y++) {
       const [s, f, val, ..._] = getRGBA(
         Math.floor((progress / 100) * WIDTH),
