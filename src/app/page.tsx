@@ -1,113 +1,134 @@
-import Image from 'next/image'
+"use client";
+
+import Image from "next/image";
+import thumb1 from "@/app/assets/img/thumbnails/1.png";
+import thumb2 from "@/app/assets/img/thumbnails/2.png";
+import thumb3 from "@/app/assets/img/thumbnails/3.png";
+import thumb4 from "@/app/assets/img/thumbnails/4.png";
+import thumb5 from "@/app/assets/img/thumbnails/5.png";
+import thumb6 from "@/app/assets/img/thumbnails/6.png";
+import Player from "./components/Player";
+import { useEffect, useRef, useState } from "react";
+import Navbar from "./components/Navbar";
+
+// @ts-ignore
+import { NextReactP5Wrapper } from "@p5-wrapper/next";
+import compositeSketch from "./p5/compositeSketch";
+import layer1Sketch from "./p5/layer1Sketch";
+import layer2Sketch from "./p5/layer2Sketch";
+import layer3Sketch from "./p5/layer3Sketch";
+import layer4Sketch from "./p5/layer4Sketch";
+import ImageTile from "./components/ImageTile";
 
 export default function Home() {
+  const [progress, setProgress] = useState<number>(10);
+  const [selectedImage, setSelectedImage] = useState(1);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <>
+      <Navbar />
+      <main className="flex min-h-screen flex-col px-24 pb-8 pt-24 justify-center">
+        <audio
+          src={`assets/${selectedImage}/audio/final_sound.mp3`}
+          ref={audioRef}
+        ></audio>
+        <div className="grow  my-4 overflow-hidden flex flex-wrap rounded-xl justify-center">
+          <div className="h-100 w-100 border border-gray-700">
+            <NextReactP5Wrapper
+              sketch={compositeSketch}
+              progress={progress}
+              selectedImage={selectedImage}
             />
-          </a>
+          </div>
+
+          <div className="grid grid-cols-2 justify-items-center shrink-0">
+            <div className="h-25 w-25 border-2 border-gray-700 -ml-[1px]">
+              <NextReactP5Wrapper
+                sketch={layer1Sketch}
+                progress={progress}
+                index={1}
+                selectedImage={selectedImage}
+              />
+            </div>
+            <div className="h-25 w-25 border-2 border-gray-700 -ml-[2px]">
+              <NextReactP5Wrapper
+                sketch={layer2Sketch}
+                progress={progress}
+                index={2}
+                selectedImage={selectedImage}
+              />
+            </div>
+            <div className="h-25 w-25 border-2 border-gray-700 -ml-[2px] -mt-[2px]">
+              <NextReactP5Wrapper
+                sketch={layer3Sketch}
+                progress={progress}
+                index={3}
+                selectedImage={selectedImage}
+              />
+            </div>
+            <div className="h-25 w-25 border-2 border-gray-700 -ml-[2px] -mt-[2px] bg-orange-400">
+              <NextReactP5Wrapper
+                sketch={layer4Sketch}
+                progress={progress}
+                index={4}
+                selectedImage={selectedImage}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <Player
+          value={progress}
+          setValue={setProgress}
+          onScrub={(val) => {
+            if (audioRef.current) {
+              audioRef.current.currentTime = (val / 100) * 20;
+            }
+          }}
+          onPlay={() => {
+            console.log(audioRef.current);
+            audioRef.current?.play();
+          }}
+          onPause={() => {
+            audioRef.current?.pause();
+          }}
+          audioRef={audioRef}
+          selectedImage={selectedImage}
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-6 gap-8 lg:text-left mx-auto">
+          <ImageTile
+            image={thumb1}
+            onClick={() => setSelectedImage(1)}
+            isSelected={selectedImage === 1}
+          />
+          <ImageTile
+            image={thumb2}
+            onClick={() => setSelectedImage(2)}
+            isSelected={selectedImage === 2}
+          />
+          <ImageTile
+            image={thumb3}
+            onClick={() => setSelectedImage(3)}
+            isSelected={selectedImage === 3}
+          />
+          <ImageTile
+            image={thumb4}
+            onClick={() => setSelectedImage(4)}
+            isSelected={selectedImage === 4}
+          />
+          <ImageTile
+            image={thumb5}
+            onClick={() => setSelectedImage(5)}
+            isSelected={selectedImage === 5}
+          />
+          <ImageTile
+            image={thumb6}
+            onClick={() => setSelectedImage(6)}
+            isSelected={selectedImage === 6}
+          />
+        </div>
+        {/* <p>x: {progress}</p> */}
+      </main>
+    </>
+  );
 }
