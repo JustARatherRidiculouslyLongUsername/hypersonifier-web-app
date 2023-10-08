@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'wallpaper': 'url(/assets/wallpaper.png)'
+      }
     },
   },
   plugins: [],

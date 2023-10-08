@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Navbar selectedImage={selectedImage} />
-      <main className="flex min-h-screen flex-col px-24 pb-3 pt-24 justify-center bg-gray-950">
+      <main className="flex min-h-screen flex-col px-24 pb-3 pt-14 justify-center bg-gray-950">
         <audio
           src={`assets/${selectedImage}/audio/final_sound.mp3`}
           ref={audioRef}
@@ -75,6 +75,28 @@ export default function Home() {
                 selectedImage={selectedImage}
               />
             </div>
+          </div>
+        </div>
+        <div className="flex justify-center gap-8 text-gray-300 ">
+          <div className="flex gap-2 items-center">
+            <span className="bg-[#ffffffdd] w-3 h-3 rounded-sm relative bottom-[1px]"></span>
+            Composite
+          </div>
+          <div className="flex gap-2 items-center">
+            <span className="bg-[rgb(200,_0,_0,.50)] w-3 h-3 rounded-sm relative bottom-[1px]"></span>
+            3.4μm
+          </div>
+          <div className="flex gap-2 items-center">
+            <span className="bg-[rgba(241,_194,_50,.60)] w-3 h-3 rounded-sm relative bottom-[1px]"></span>
+            4.6μm
+          </div>
+          <div className="flex gap-2 items-center">
+            <span className="bg-[rgb(104,_255,_0,.30)] w-3 h-3 rounded-sm relative bottom-[1px]"></span>
+            12μm
+          </div>
+          <div className="flex gap-2 items-center">
+            <span className="bg-[rgb(61,_133,_198,.60)] w-3 h-3 rounded-sm relative bottom-[1px]"></span>
+            22μm
           </div>
         </div>
         <Player

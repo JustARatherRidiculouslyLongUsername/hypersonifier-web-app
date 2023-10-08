@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import Image from "next/image";
+import logo from "@/app/assets/img/logo.png";
 
 const titles = [
   null,
@@ -34,7 +35,14 @@ export default function Navbar({ selectedImage }: { selectedImage?: number }) {
         className="border-b border-gray-900"
       >
         <Toolbar>
-          <div className="absolute w-28 h-10 border"></div>
+          <div className="absolute w-44 h-14 top-1">
+            <Image
+              fill
+              src={logo}
+              alt="Hypersonify Logo"
+              className="object-contain"
+            />
+          </div>
 
           <div className="grow">
             <Typography
